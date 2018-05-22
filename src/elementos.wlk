@@ -55,6 +55,13 @@ class Mascota inherits Elemento {
 	}
 	
 	override method esAtacado(plagaX) {
-		salud -= if(plagaX.transmiteEnfermedades()) {plagaX.nivelDanio()} else {0}
+		salud -= self.restarSalud(plagaX)
+		salud = salud.max(0)
+	}
+	
+	method restarSalud(plagaY) {
+		return if (plagaY.transmiteEnfermedades()) {
+			plagaY.nivelDanio()
+		} else {0}
 	}
 }

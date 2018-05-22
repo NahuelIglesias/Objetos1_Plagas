@@ -14,7 +14,7 @@ class Plaga {
 	
 	method atacar(elementoX) {
 		elementoX.esAtacado(self)
-		poblacion += (poblacion*0.1)
+		poblacion += (poblacion*0.1) //la poblacion se modifica DESPUES porque la cantidad influye
 	}
 }
 
@@ -41,7 +41,7 @@ class Pulgas inherits Plaga {
 }
 
 class Garrapatas inherits Pulgas {
-	//funciona de la misma forma que las pulgas
+	//funciona casi de la misma forma que las pulgas
 	
 	override method atacar(elementoX) {
 		elementoX.esAtacado(self)
