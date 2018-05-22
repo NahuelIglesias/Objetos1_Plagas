@@ -1,0 +1,101 @@
+import elementos.*
+import plagas.*
+
+
+describe "testeo general" {
+	var casa
+	var plantacion
+	var perrito
+	
+	var cucarachas
+	var demasiadasCucarachas
+	var pulgas
+	var garrapatas
+	var mosquitos
+	
+	fixture {
+		casa = new Hogar(confort=20, mugre=6)
+		plantacion = new Huerta(produccion=5, valorX=8)
+		perrito = new Mascota(salud=80)
+		
+		cucarachas = new Cucarachas(poblacion=200)
+		demasiadasCucarachas = new Cucarachas(poblacion=1000) 
+		pulgas = new Pulgas()
+		garrapatas = new Garrapatas(poblacion=50)
+		mosquitos = new Mosquitos()
+	}
+	
+//------Parte 1------
+	
+	test "casa comoda" {
+		assert.that(casa.esBueno())
+	}
+	
+	test "plantacion no productiva" {
+		assert.that(!plantacion.esBueno())
+	}
+	
+	test "perrito sano" {
+		assert.that(perrito.esBueno())
+	}
+	
+//------Parte 2------
+	
+	test "eso no es una mosca... eso es uNA CUCARACHAAA" {
+		assert.equals(100, cucarachas.nivelDanio())
+		assert.that(!cucarachas.transmiteEnfermedades())
+	}
+	
+	test "pulgas de m*erda" {
+		assert.equals(200, pulgas.nivelDanio())
+		assert.that(pulgas.transmiteEnfermedades())
+	}
+	
+	test "y ahora garrapatas..." {
+		assert.equals(100, garrapatas.nivelDanio())
+		assert.that(garrapatas.transmiteEnfermedades())
+	}
+	
+	test "mosquitos. Send off" {
+		assert.equals(100, mosquitos.nivelDanio())
+		assert.that(!mosquitos.transmiteEnfermedades())
+	}
+	
+//------Parte 3 y 4------
+
+	test "cucarachas atacan casa **brace thyselves**" {
+		cucarachas.atacar(casa)
+		assert.equals(106, casa.mugre())
+		assert.equals(220, cucarachas.poblacion())
+	}
+	
+	test "cucarachas atacan plantacion" {
+		cucarachas.atacar(plantacion)
+		assert.equals(-95, plantacion.produccion())
+		assert.equals(220, cucarachas.poblacion())
+	}
+	
+	test "DEMASIADAS cucarachas atacan plantancion" {
+		demasiadasCucarachas.atacar(plantacion)
+		assert.equals(-505, plantacion.produccion())
+		assert.equals(1100, demasiadasCucarachas.poblacion())
+	}
+	
+	test "pulgas atacan perrito y se enferma **TODO MENOS ESO POR FAVAR**" {
+		pulgas.atacar(perrito)
+		assert.equals(-120, perrito.salud()) //creo que se murio </3
+		assert.equals(110, pulgas.poblacion())
+	}
+	
+	test "mosquitos atacan perrito pero no se enferma **thank god**" {
+		mosquitos.atacar(perrito)
+		assert.equals(80, perrito.salud())
+		assert.equals(110, mosquitos.poblacion())
+	}
+	
+	test "garrapatas atacan perrito y se enferma **oh god not again**" {
+		garrapatas.atacar(perrito)
+		assert.equals(-20, perrito.salud()) //creo que se murio </3
+		assert.equals(60, garrapatas.poblacion())
+	}
+}
