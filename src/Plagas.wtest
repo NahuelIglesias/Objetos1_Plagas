@@ -15,7 +15,8 @@ describe "testeo general" {
 	
 	fixture {
 		casa = new Hogar(confort=20, mugre=6)
-		plantacion = new Huerta(produccion=5, valorX=8)
+		plantacion = new Huerta(produccion=5)
+			parametrosHuerta.cambiarValorStandart(8)
 		perrito = new Mascota(salud=80)
 		
 		cucarachas = new Cucarachas(poblacion=200)

@@ -23,16 +23,25 @@ class Hogar inherits Elemento {
 
 class Huerta inherits Elemento {
 	var produccion = 9
-	var valorX = 0 //desconocido, se sabe que es el mismo para todas las huertas
 	
 	method produccion() = produccion
 	
 	override method esBueno() {
-		return produccion > valorX
+		return produccion > parametrosHuerta.valorStandart()
 	}
 	
 	override method esAtacado(plagaX) {
 		produccion -= plagaX.nivelDanio() + if(plagaX.transmiteEnfermedades()) {10} else {0}
+	}
+}
+
+object parametrosHuerta { //auxiliar para huerta, determina valor universal
+	var valorStandart = 0
+	
+	method valorStandart() = valorStandart
+	
+	method cambiarValorStandart(valor) {
+		valorStandart = valor
 	}
 }
 
